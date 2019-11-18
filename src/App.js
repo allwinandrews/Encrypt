@@ -15,8 +15,8 @@ export default function App() {
     for (var i = 1; i < 27; i++) current_num.push(i);
     setOldNum(current_num);
     for (i = 10; i < 36; i++) alpha.push(i.toString(36));
-    console.log(oldNum)
-    console.log(oldNum.indexOf(keyNum))
+    console.log(oldNum);
+    console.log(oldNum.indexOf(keyNum));
     // setPosition(current_num.indexOf(keyNum));
     // console.log(position);
   }, [keyNum]);
@@ -30,7 +30,7 @@ export default function App() {
       />
       <Input
         onChange={event => {
-          setKeyNum(event.target.value);
+          setKeyNum(parseInt(event.target.value));
         }}
         placeholder="Type key number"
         type="number"
