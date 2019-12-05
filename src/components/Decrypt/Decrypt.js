@@ -53,11 +53,7 @@ export default function Decrypt(props) {
               />
             </div>
             <div className="field">
-              <textarea
-                disabled
-                rows="6"
-                placeholder={final ? final : "Message"}
-              ></textarea>
+              <textarea value={final ? final : "Code"} rows="6"></textarea>
             </div>
             <ul className="actions">
               <li>
