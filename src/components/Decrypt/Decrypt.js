@@ -3,7 +3,7 @@ import { Button } from "reactstrap";
 
 import {
   initialize,
-  convertToDict,
+  twistArray,
   convertToWordArray,
   convertToWords
 } from "../actions/actions";
@@ -16,20 +16,11 @@ export default function Decrypt(props) {
   const [code, setCode] = useState("");
   const [final, setFinal] = useState("");
 
-  var dict = [],
-    new_num = [],
-    words_num;
-
   //Sets the decrypted code by rearranging the array
-  const twistArray = () => {
-    var current = curNum;
-    var toattach = current.splice(0, current[curNum.indexOf(keyNum) - 1]);
-    console.log(curNum.indexOf(keyNum) - 1);
-    new_num = current.concat(toattach);
-    dict = convertToDict(new_num, alpha);
-    words_num = code.split(" ");
-    words_num = convertToWordArray(words_num);
-    setFinal(convertToWords(words_num, dict));
+  const calculate = () => {
+    var { words, dict } = twistArray(curNum, keyNum, alpha, code);
+    words = convertToWordArray(words);
+    setFinal(convertToWords(words, dict));
   };
 
   useEffect(() => {
@@ -75,7 +66,7 @@ export default function Decrypt(props) {
                     value="decrypt"
                     className="button alt"
                     type="button"
-                    onClick={twistArray}
+                    onClick={calculate}
                   />
                 ) : (
                   ""
