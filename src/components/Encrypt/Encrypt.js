@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "reactstrap";
 
-import { initialize } from "../actions/actions";
+import {
+  initialize,
+  twistArray,
+  encryptWordsToNumberArray,
+  convertToCode
+} from "../actions/actions";
 
 export default function Encrypt(props) {
   const { toggle, button } = props;
@@ -10,14 +15,12 @@ export default function Encrypt(props) {
   const [message, setMessage] = useState("");
   const [curNum, setCurNum] = useState([]);
   const [alpha, setAlpha] = useState([]);
+  const [final, setFinal] = useState("");
 
-  const e_convertToWords = (keyNum, message) => {
-    var words = message.split(" ");
-    return words;
-  };
-
-  const twistArray = () => {
-    var words = e_convertToWords(keyNum, message);
+  const calculate = () => {
+    var { words, dict } = twistArray(curNum, keyNum, alpha, message);
+    words = encryptWordsToNumberArray(words);
+    setFinal(convertToCode(words, dict));
   };
 
   useEffect(() => {
@@ -51,7 +54,11 @@ export default function Encrypt(props) {
             />
           </div>
           <div className="field">
-            <textarea disabled rows="6" placeholder="Code"></textarea>
+            <textarea
+              disabled
+              rows="6"
+              placeholder={final ? final : "Code"}
+            ></textarea>
           </div>
           <ul className="actions">
             <li>
@@ -60,7 +67,7 @@ export default function Encrypt(props) {
                   value="encrypt"
                   className="button alt"
                   type="button"
-                  onClick={twistArray}
+                  onClick={calculate}
                 />
               ) : (
                 ""
