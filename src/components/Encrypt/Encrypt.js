@@ -7,6 +7,7 @@ import {
   encryptWordsToNumberArray,
   convertToCode
 } from "../actions/actions";
+import CommonForm from "../CommonForm/CommonForm";
 
 export default function Encrypt(props) {
   const { toggle, button } = props;
@@ -18,7 +19,12 @@ export default function Encrypt(props) {
   const [final, setFinal] = useState("");
 
   const calculate = () => {
-    var { words, dict } = twistArray(curNum, keyNum, alpha, message);
+    var { words, dict } = twistArray(
+      curNum,
+      keyNum,
+      alpha,
+      message.toLowerCase()
+    );
     words = encryptWordsToNumberArray(words);
     setFinal(convertToCode(words, dict));
   };
@@ -34,47 +40,15 @@ export default function Encrypt(props) {
       <div className="inner">
         <h3>Encrypto</h3>
         <Button onClick={toggle}>{button}</Button>
-        <form>
-          <div className="field half first">
-            <input
-              onChange={event => {
-                setKeyNum(parseInt(event.target.value));
-              }}
-              type="number"
-              placeholder="Type key number"
-            />
-          </div>
-          <div className="field half">
-            <input
-              onChange={event => {
-                setMessage(event.target.value);
-              }}
-              type="text"
-              placeholder="Type your message"
-            />
-          </div>
-          <div className="field">
-            <textarea
-              value={final ? final : "Code"}
-              onChange={() => setFinal(final)}
-              rows="6"
-            ></textarea>
-          </div>
-          <ul className="actions">
-            <li>
-              {!(keyNum === 0 || message === "") ? (
-                <input
-                  value="encrypt"
-                  className="button alt"
-                  type="button"
-                  onClick={calculate}
-                />
-              ) : (
-                ""
-              )}
-            </li>
-          </ul>
-        </form>
+        <CommonForm
+          inputOne={setKeyNum}
+          inputTwo={setMessage}
+          value={final ? final : "Code"}
+          textAreaOnChange={setFinal}
+          one={keyNum}
+          two={message}
+          calculate={calculate}
+        />
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ import {
   convertToWordArray,
   convertToWords
 } from "../actions/actions";
+import CommonForm from "../CommonForm/CommonForm";
 
 export default function Decrypt(props) {
   const { toggle, button } = props;
@@ -30,52 +31,20 @@ export default function Decrypt(props) {
   }, [keyNum, code]);
 
   return (
-    <>
-      <div id="enrypt">
-        <div className="inner">
-          <h3>Encrypto</h3>
-          <Button onClick={toggle}>{button}</Button>
-          <form>
-            <div className="field half first">
-              <input
-                onChange={event => {
-                  setKeyNum(parseInt(event.target.value));
-                }}
-                type="number"
-                placeholder="Type key number"
-              />
-            </div>
-            <div className="field half">
-              <input
-                onChange={event => setCode(event.target.value)}
-                placeholder="Type your code"
-                type="text"
-              />
-            </div>
-            <div className="field">
-              <textarea
-                value={final ? final : "Message"}
-                onChange={() => setFinal(final)}
-                rows="6"
-              ></textarea>
-            </div>
-            <ul className="actions">
-              <li>
-                {!(keyNum === 0 || code === "") ? (
-                  <input
-                    value="decrypt"
-                    className="button alt"
-                    type="button"
-                    onClick={calculate}
-                  />
-                ) : (
-                  ""
-                )}
-              </li>
-            </ul>
-          </form>
-        </div>
+    <div id="enrypt">
+      <div className="inner">
+        <h3>Encrypto</h3>
+        <Button onClick={toggle}>{button}</Button>
+        <CommonForm
+          inputOne={setKeyNum}
+          inputTwo={setCode}
+          value={final ? final : "Message"}
+          textAreaOnChange={setFinal}
+          one={keyNum}
+          two={code}
+          calculate={calculate}
+        />
       </div>
-    </>
+    </div>
   );
 }
