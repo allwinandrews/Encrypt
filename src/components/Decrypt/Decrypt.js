@@ -42,6 +42,7 @@ export default function Decrypt(props) {
           textAreaOnChange={setFinal}
           one={keyNum}
           two={code}
+          buttonText={"decrypt"}
           calculate={calculate}
         />
       </div>

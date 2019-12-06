@@ -47,6 +47,7 @@ export default function Encrypt(props) {
           textAreaOnChange={setFinal}
           one={keyNum}
           two={message}
+          buttonText={"encrypt"}
           calculate={calculate}
         />
       </div>

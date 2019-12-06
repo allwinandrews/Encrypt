@@ -8,6 +8,7 @@ export default function CommonForm(props) {
     textAreaOnChange,
     one,
     two,
+    buttonText,
     calculate
   } = props;
   return (
@@ -39,7 +40,7 @@ export default function CommonForm(props) {
         <li>
           {!(one === 0 || two === "") ? (
             <input
-              value="decrypt"
+              value={buttonText}
               className="button alt"
               type="button"
               onClick={calculate}
