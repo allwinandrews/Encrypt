@@ -33,7 +33,7 @@ export default function Encrypt(props) {
     const { current_num, alphas } = initialize();
     setCurNum(current_num);
     setAlpha(alphas);
-  }, [keyNum]);
+  }, []);
 
   return (
     <div id="enrypt">

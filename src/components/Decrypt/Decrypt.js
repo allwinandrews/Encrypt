@@ -28,7 +28,7 @@ export default function Decrypt(props) {
     const { current_num, alphas } = initialize();
     setCurNum(current_num);
     setAlpha(alphas);
-  }, [keyNum, code]);
+  }, []);
 
   return (
     <div id="enrypt">
