@@ -53,7 +53,11 @@ export default function Decrypt(props) {
               />
             </div>
             <div className="field">
-              <textarea value={final ? final : "Code"} rows="6"></textarea>
+              <textarea
+                value={final ? final : "Message"}
+                onChange={() => setFinal(final)}
+                rows="6"
+              ></textarea>
             </div>
             <ul className="actions">
               <li>
