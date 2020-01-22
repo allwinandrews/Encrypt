@@ -1,5 +1,6 @@
 {
   "name": "encrypt",
+  "author": "Allwin J Andrews",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
