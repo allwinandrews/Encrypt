@@ -52,6 +52,18 @@ export const convertToWordArray = words_num => {
   return words;
 };
 
+export const encryptSentencesToWords = sentences => {
+  var word = [],
+    split,
+    i;
+  for (i in sentences) {
+    split = sentences[i].split(" ");
+    word.push(split);
+  }
+  if (word[word.length - 1][0] === "") word.pop();
+  return word;
+};
+
 //
 export const encryptWordsToNumberArray = words => {
   var words_list = [],
@@ -88,11 +100,20 @@ export const convertToWords = (words_num, dict) => {
         result.push(checkInDict(words_num[i][j], dict, false));
       result.push(" ");
     }
-
   return result.join("");
 };
 
-//
+export const convertToSentenceCode = (words, dict, last = false) => {
+  var i,
+    result = [];
+  for (i in words) {
+    if (i === `${words.length - 1}`)
+      result.push(checkInDict(words[i], dict, true));
+    else result.push(checkInDict(words[i], dict, true) + ",");
+  }
+  return result.join("");
+};
+
 export const convertToCode = (words, dict) => {
   var result = [];
   for (var i in words)
@@ -103,7 +124,7 @@ export const convertToCode = (words, dict) => {
         result.push(checkInDict(words[i][j], dict, true) + ",");
       }
       var last_char = result.pop();
-      result.push(last_char.slice(0, -1) + "");
+      result.push(last_char.slice(0, -1));
     }
   return result.join("");
 };
@@ -115,5 +136,12 @@ export const twistArray = (curNum, keyNum, alpha, to_split) => {
   var new_num = current.concat(toattach);
   var dict = convertToDict(new_num, alpha);
   var words = to_split.split(" ");
-  return { words, dict };
+  var sentences = [];
+  if (to_split.includes(".")) {
+    sentences = to_split.split(".");
+    var last_word = words[words.length - 1].replace(".", "");
+    words.pop();
+    words.push(last_word); //pushes last word into the words without '.'
+  }
+  return { words, dict, sentences };
 };

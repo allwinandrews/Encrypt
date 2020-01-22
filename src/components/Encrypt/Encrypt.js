@@ -5,7 +5,9 @@ import {
   initialize,
   twistArray,
   encryptWordsToNumberArray,
-  convertToCode
+  convertToCode,
+  convertToSentenceCode,
+  encryptSentencesToWords
 } from "../actions/actions";
 import CommonForm from "../CommonForm/CommonForm";
 
@@ -19,14 +21,37 @@ export default function Encrypt(props) {
   const [final, setFinal] = useState("");
 
   const calculate = () => {
-    var { words, dict } = twistArray(
-      curNum,
-      keyNum,
-      alpha,
-      message.toLowerCase()
-    );
-    words = encryptWordsToNumberArray(words);
-    setFinal(convertToCode(words, dict));
+    var words_to_num_array = [],
+      char_array = [],
+      { words, dict, sentences } = twistArray(
+        curNum,
+        keyNum,
+        alpha,
+        message.toLowerCase()
+      );
+    if (sentences.length) {
+      sentences = encryptSentencesToWords(sentences);
+      for (var i in sentences) {
+        char_array.push(encryptWordsToNumberArray(sentences[i]));
+      }
+      for (i in char_array) {
+        for (var j in char_array[i]) {
+          if (j === `${char_array[i].length - 1}`) {
+            words_to_num_array.push(
+              convertToSentenceCode(char_array[i][j], dict, true) + "."
+            );
+          } else {
+            words_to_num_array.push(
+              convertToSentenceCode(char_array[i][j], dict) + " "
+            );
+          }
+        }
+      }
+      setFinal(words_to_num_array.join(""));
+    } else {
+      words = encryptWordsToNumberArray(words);
+      setFinal(convertToCode(words, dict));
+    }
   };
 
   useEffect(() => {
